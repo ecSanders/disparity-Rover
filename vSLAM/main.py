@@ -1,3 +1,4 @@
+import cv2
 '''
 Title: main.py
 Authors: Erik Sanders, Jared Perlic, Tyson Mergle
@@ -50,10 +51,18 @@ visual SLAM algorithm. The process that is used is as follows:
 
 6. Visualization
 '''
+def test_image():
+    img = cv2.imread("Images/Mars.webp")
+    window_name = 'Mars'
 
+    cv2.imshow(window_name, img)
+
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 def driver():
     pass
 
 if __name__ == '__main__':
-    driver()
+    test_image()
+    #driver()
