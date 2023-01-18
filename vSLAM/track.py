@@ -4,7 +4,7 @@ Authors: Erik Sanders, Jared Perlic, Tyson Mergle
 Date Start: Jan 16, 2023
 Description:
 
-This file is meant for the first part of the vSLAM algorithm. These steps
+This file is meant for the second part of the vSLAM algorithm. These steps
 are as follows:
 
 - Match extracted features
