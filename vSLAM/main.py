@@ -1,4 +1,5 @@
 import cv2
+import map_initialization
 '''
 Title: main.py
 Authors: Erik Sanders, Jared Perlic, Tyson Mergle
@@ -61,6 +62,11 @@ def test_image():
     cv2.destroyAllWindows()
 
 def driver():
+    # Start camera feed
+
+    ### Call step one ###
+    # Call substeps of step one 
+
     pass
 
 if __name__ == '__main__':
