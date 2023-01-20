@@ -1,4 +1,5 @@
 opencv-python
 numpy
 numba # Optimization library
-imutils
+imutils # Img handling
+open3d # Point cloud lib
