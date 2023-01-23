@@ -4,7 +4,7 @@ import time
 img_path = '../../Images'
 
 # Create a Stitcher
-settings = {"detector": "sift", "confidence_threshold": 0.2}
+settings = {'detector': 'sift', 'confidence_threshold': 0.2}
 stitcher = stitching.Stitcher(**settings)
 
 # Start the timer
