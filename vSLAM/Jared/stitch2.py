@@ -17,4 +17,4 @@ res = stitcher.stitch([f'{img_path}/stitch01_small.jpg', f'{img_path}/stitch02_s
 stop = time.time()
 
 # Print the time taken to stitch
-print(f'Time to stitch: {round(stop - start, 2)}s')
+print(f'Time to stitch: {round(stop - start, 2)}s')  # Too slow for practical use

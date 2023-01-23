@@ -11,7 +11,7 @@ imgs = [cv.imread(f'../../Images/{file}') for file in files.split(' ')]
 
 # # View images
 # for img in imgs:
-#     cv.imshow(f"Image", img)
+#     cv.imshow(f'Image', img)
 
 #     cv.waitKey(0)
 #     cv.destroyAllWindows()
