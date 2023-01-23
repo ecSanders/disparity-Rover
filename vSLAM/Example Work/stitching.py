@@ -5,6 +5,7 @@ NOTE: This code is intellectual property of
 import cv2
 import imutils
 import numpy as np
+import time
 
 # Get file names
 # files = "stitch01_small.jpg stitch02_small.jpg stitch03_small.jpg"
@@ -12,23 +13,27 @@ files = "stitch01_med.jpg stitch02_med.jpg"
 
 # load images into list
 imgs = [cv2.imread(f"../../Images/{file}") for file in files.split(" ")]
+# Convert to Grayscale
+imgs = [cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) for img in imgs]
 
 # View images
-for img in imgs:
-    cv2.imshow(f"Image", img)
+# for img in imgs:
+#     cv2.imshow(f"Image", img)
 
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+#     cv2.waitKey(0)
+#     cv2.destroyAllWindows()
 
 # Create stitching object
 stitcher = cv2.Stitcher.create(cv2.Stitcher_SCANS)
-stitcher.setPanoConfidenceThresh(0.0)
+# stitcher.setPanoConfidenceThresh(0.0)
 
 # Stitch
+start = time.time()
 (status, stitched) = stitcher.stitch(imgs)
-
+end = time.time()
 # Make sure it was successful
 assert status == 0
+print(f'Stitching took: {end - start}')
 
 cv2.imshow("Successful Stitch", stitched)
 cv2.waitKey(0)
