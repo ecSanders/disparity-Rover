@@ -11,7 +11,7 @@ stitcher = stitching.Stitcher(**settings)
 start = time.time()
 
 # Perform the stitch
-res = stitcher.stitch(['{img_path}/stitch01_small.jpg', '{img_path}/stitch02_small.jpg'])
+res = stitcher.stitch([f'{img_path}/stitch01_small.jpg', f'{img_path}/stitch02_small.jpg'])
 
 # Stop the timer
 stop = time.time()
