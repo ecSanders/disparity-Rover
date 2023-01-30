@@ -1,3 +1,11 @@
+'''
+Title: visualize.py
+Authors: Jared Perlic
+Date Start: Jan 30, 2023
+Description:
+
+This script displays pointcloud.
+'''
 import open3d as o3d
 import numpy as np
 

@@ -1,10 +1,10 @@
 '''
-Title: match.py
+Title: stitch.py
 Authors: Erik Sanders, Jared Perlic
 Date Start: Jan 30, 2023
 Description:
 
-This script runs the feature matching.
+This script stitches two images.
 '''
 import cv2 as cv
 import numpy as np
