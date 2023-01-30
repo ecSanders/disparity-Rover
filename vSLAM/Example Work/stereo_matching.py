@@ -1,5 +1,5 @@
 '''
-Title: capture2.py
+Title: stereo_matching.py
 Authors: Jared Perlic
 Date Start: Jan 30, 2023
 Description:
@@ -32,7 +32,6 @@ while True:
     # Match descriptors
     matches = bf.match(des1, des2)
 
-
     # Sort them in the order of their distance
     matches = sorted(matches, key=lambda x:x.distance)
 
@@ -41,7 +40,6 @@ while True:
 
     # Display the video
     cv.imshow('Joined Features', img3)
-    # cv.imshow('dispR', frameR)
     
     # Press `q` to close the window
     if cv.waitKey(1) & 0xFF == ord('q'):
