@@ -1,3 +1,12 @@
+'''
+Title: match.py
+Authors: Jared Perlic
+Date Start: Jan 30, 2023
+Description:
+
+This script runs the feature matching.
+'''
+
 import cv2 as cv
 import numpy as np
 import matplotlib.pyplot as plt

@@ -1,3 +1,12 @@
+'''
+Title: capture1.py
+Authors: Jared Perlic
+Date Start: Jan 30, 2023
+Description:
+
+This script runs a webcam and displays the feed live.
+'''
+
 import cv2 as cv
 
 # Define a VideoCapture object

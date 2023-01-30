@@ -1,3 +1,12 @@
+'''
+Title: distance.py
+Authors: Jared Perlic
+Date Start: Jan 30, 2023
+Description:
+
+This script find the distance between the camera and the feature in an image.
+'''
+
 import cv2 as cv
 import numpy as np
 import imutils
