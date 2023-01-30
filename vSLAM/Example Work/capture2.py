@@ -9,8 +9,8 @@ This script runs a webcam and displays the feed live.
 import cv2 as cv
 
 # Define two VideoCapture objects
-camL = cv.VideoCapture(0)  # Camera ID for left camera
-camR = cv.VideoCapture(0)  # Camera ID for right camera
+camL = cv.VideoCapture(1)  # Camera ID for left camera
+camR = cv.VideoCapture(2)  # Camera ID for right camera
 
 while True:
 
