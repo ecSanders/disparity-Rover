@@ -14,7 +14,7 @@ files = "stitch01_med.jpg stitch02_med.jpg"
 # load images into list
 imgs = [cv2.imread(f"../../Images/{file}") for file in files.split(" ")]
 # Convert to Grayscale
-imgs = [cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) for img in imgs]
+# imgs = [cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) for img in imgs]
 
 # View images
 # for img in imgs:
