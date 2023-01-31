@@ -1,1 +1,0 @@
-# Project Requirements - Visual SLAM Rover
