@@ -1,6 +1,6 @@
 '''
 Title: stereo_matching.py
-Authors: Jared Perlic
+Authors: Jared Perlic, Erik Sanders
 Date Start: Jan 30, 2023
 Description:
 
