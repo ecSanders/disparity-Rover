@@ -9,15 +9,15 @@ This script generates a disparity map from a live feed.
 import cv2 as cv
 import numpy as np
 
-camIdL = 1  # Camera ID for left camera
-camIdR = 2  # Camera ID for right camera
+camIdL = 2  # Camera ID for left camera
+camIdR = 0  # Camera ID for right camera
 
 # Define two VideoCapture objects
 camL = cv.VideoCapture(camIdL)
 camR = cv.VideoCapture(camIdR)
 
 # Read and map values for stereo image rectification
-cv_file = cv.FileStorage("data/stereo_rectify_maps.xml", cv.FILE_STORAGE_READ)
+cv_file = cv.FileStorage("stereo_rectify_maps.xml", cv.FILE_STORAGE_READ)
 Left_Stereo_Map_x = cv_file.getNode("Left_Stereo_Map_x").mat()
 Left_Stereo_Map_y = cv_file.getNode("Left_Stereo_Map_y").mat()
 Right_Stereo_Map_x = cv_file.getNode("Right_Stereo_Map_x").mat()
@@ -48,14 +48,14 @@ stereo = cv.StereoBM_create()
 while True:
 
     # Capture and store left and right camera images
-    retL, imgL= camL.read()
-    retR, imgR= camR.read()
-    
+    retL, imgL = camL.read()
+    retR, imgR = camR.read()
+
     # Proceed only if the frames have been captured
     if retL and retR:
         imgR_gray = cv.cvtColor(imgR,cv.COLOR_BGR2GRAY)
         imgL_gray = cv.cvtColor(imgL,cv.COLOR_BGR2GRAY)
-    
+
         # Apply stereo image rectification on the left image
         Left_nice = cv.remap(imgL_gray,
                              Left_Stereo_Map_x,
