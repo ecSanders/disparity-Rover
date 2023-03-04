@@ -17,11 +17,11 @@ camL = cv.VideoCapture(camIdL)
 camR = cv.VideoCapture(camIdR)
 
 # Read and map values for stereo image rectification
-cv_file = cv.FileStorage("stereo_rectify_maps.xml", cv.FILE_STORAGE_READ)
-Left_Stereo_Map_x = cv_file.getNode("Left_Stereo_Map_x").mat()
-Left_Stereo_Map_y = cv_file.getNode("Left_Stereo_Map_y").mat()
-Right_Stereo_Map_x = cv_file.getNode("Right_Stereo_Map_x").mat()
-Right_Stereo_Map_y = cv_file.getNode("Right_Stereo_Map_y").mat()
+cv_file = cv.FileStorage('stereo_rectify_maps.xml', cv.FILE_STORAGE_READ)
+Left_Stereo_Map_x = cv_file.getNode('Left_Stereo_Map_x').mat()
+Left_Stereo_Map_y = cv_file.getNode('Left_Stereo_Map_y').mat()
+Right_Stereo_Map_x = cv_file.getNode('Right_Stereo_Map_x').mat()
+Right_Stereo_Map_y = cv_file.getNode('Right_Stereo_Map_y').mat()
 cv_file.release()
 
 def nothing(x):
@@ -32,7 +32,6 @@ cv.resizeWindow('disp', 600, 600)
  
 cv.createTrackbar('numDisparities', 'disp', 1, 17, nothing)
 cv.createTrackbar('blockSize', 'disp', 5, 50, nothing)
-cv.createTrackbar('preFilterType', 'disp', 1, 1, nothing)
 cv.createTrackbar('preFilterSize', 'disp', 2, 25, nothing)
 cv.createTrackbar('preFilterCap', 'disp', 5, 62, nothing)
 cv.createTrackbar('textureThreshold', 'disp', 10, 100, nothing)
@@ -53,8 +52,8 @@ while True:
 
     # Proceed only if the frames have been captured
     if retL and retR:
-        imgR_gray = cv.cvtColor(imgR,cv.COLOR_BGR2GRAY)
-        imgL_gray = cv.cvtColor(imgL,cv.COLOR_BGR2GRAY)
+        imgR_gray = cv.cvtColor(imgR, cv.COLOR_BGR2GRAY)
+        imgL_gray = cv.cvtColor(imgL, cv.COLOR_BGR2GRAY)
 
         # Apply stereo image rectification on the left image
         Left_nice = cv.remap(imgL_gray,
@@ -75,7 +74,6 @@ while True:
         # Update the parameters based on the trackbar positions
         numDisparities = cv.getTrackbarPos('numDisparities', 'disp') * 16
         blockSize = cv.getTrackbarPos('blockSize', 'disp') * 2 + 5
-        preFilterType = cv.getTrackbarPos('preFilterType', 'disp')
         preFilterSize = cv.getTrackbarPos('preFilterSize', 'disp') * 2 + 5
         preFilterCap = cv.getTrackbarPos('preFilterCap', 'disp')
         textureThreshold = cv.getTrackbarPos('textureThreshold', 'disp')
@@ -88,7 +86,6 @@ while True:
         # Set the updated parameters before computing disparity map
         stereo.setNumDisparities(numDisparities)
         stereo.setBlockSize(blockSize)
-        stereo.setPreFilterType(preFilterType)
         stereo.setPreFilterSize(preFilterSize)
         stereo.setPreFilterCap(preFilterCap)
         stereo.setTextureThreshold(textureThreshold)
@@ -99,7 +96,7 @@ while True:
         stereo.setMinDisparity(minDisparity)
 
         # Calculate disparity using the StereoBM algorithm
-        disparity = stereo.compute(Left_nice,Right_nice)
+        disparity = stereo.compute(Left_nice, Right_nice)
         # NOTE: Code returns a 16bit signed single channel image,
         # CV_16S containing a disparity map scaled by 16. Hence it 
         # is essential to convert it to CV_32F and scale it down 16 times.
@@ -111,7 +108,7 @@ while True:
         disparity = (disparity / 16.0 - minDisparity) / numDisparities
     
         # Display the disparity map
-        cv.imshow("disp",disparity)
+        cv.imshow('disp', disparity)
 
         # Press `q` to close the window
         if cv.waitKey(1) & 0xFF == ord('q'):
