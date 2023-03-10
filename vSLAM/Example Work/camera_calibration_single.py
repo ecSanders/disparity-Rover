@@ -24,8 +24,8 @@ def calibrate_camera(images_folder):
     #Change this if the code can't find the checkerboard
     criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
  
-    rows = 5 #number of checkerboard rows.
-    columns = 8 #number of checkerboard columns.
+    rows = 4 #number of checkerboard rows.
+    columns = 5 #number of checkerboard columns.
     world_scaling = 1. #change this to the real world square size. Or not.
  
     #coordinates of squares in the checkerboard world space
@@ -45,11 +45,19 @@ def calibrate_camera(images_folder):
  
  
     for frame in images:
-        gray = cv2.cv2tColor(frame, cv2.COLOR_BGR2GRAY)
- 
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        
+
+
+        # cv2.imshow("yeello", res)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
         #find the checkerboard
         ret, corners = cv2.findChessboardCorners(gray, (rows, columns), None)
- 
+
+        # False
+        print(ret)
+
         if ret == True:
  
             #Convolution size used to improve corner detection. Don't make this too large.
@@ -65,7 +73,9 @@ def calibrate_camera(images_folder):
             imgpoints.append(corners)
  
  
- 
+    # ERROR 1,2
+    # print(objpoints, imgpoints, width, height)
+    print(objpoints, imgpoints, width, height)
     ret, mtx, dist, rvecs, tvecs = cv2.calibrateCamera(objpoints, imgpoints, (width, height), None, None)
     print('rmse:', ret)
     print('camera matrix:\n', mtx)
@@ -75,5 +85,5 @@ def calibrate_camera(images_folder):
  
     return mtx, dist
  
-mtx1, dist1 = calibrate_camera(images_folder = 'D2/*')
-mtx2, dist2 = calibrate_camera(images_folder = 'J2/*')
+mtx1, dist1 = calibrate_camera(images_folder = '../../Images/calibration/D2/*')
+mtx2, dist2 = calibrate_camera(images_folder = '../../Images/calibration/J2/*')
