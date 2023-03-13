@@ -1,11 +1,11 @@
-'''
-Title: disparity.py
+"""
+Title: disparity_params.py
 Authors: Jared Perlic
-Date Start: Feb 25, 2023
+Date Start: Mar 13, 2023
 Description:
 
-This script generates a disparity map from a live feed.
-'''
+This script allows the user to find optimal parameters for the disparity maps.
+"""
 import cv2 as cv
 import numpy as np
 
@@ -18,29 +18,29 @@ CamR = cv.VideoCapture(CamR_id)
 
 
 # Read and map values for stereo image rectification
-cv_file = cv.FileStorage('stereo_rectify_maps.xml', cv.FILE_STORAGE_READ)
-Left_Stereo_Map_x = cv_file.getNode('Left_Stereo_Map_x').mat()
-Left_Stereo_Map_y = cv_file.getNode('Left_Stereo_Map_y').mat()
-Right_Stereo_Map_x = cv_file.getNode('Right_Stereo_Map_x').mat()
-Right_Stereo_Map_y = cv_file.getNode('Right_Stereo_Map_y').mat()
+cv_file = cv.FileStorage("stereo_rectify_maps.xml", cv.FILE_STORAGE_READ)
+Left_Stereo_Map_x = cv_file.getNode("Left_Stereo_Map_x").mat()
+Left_Stereo_Map_y = cv_file.getNode("Left_Stereo_Map_y").mat()
+Right_Stereo_Map_x = cv_file.getNode("Right_Stereo_Map_x").mat()
+Right_Stereo_Map_y = cv_file.getNode("Right_Stereo_Map_y").mat()
 cv_file.release()
 
 def nothing(x):
     pass
 
-cv.namedWindow('disp', cv.WINDOW_NORMAL)
-cv.resizeWindow('disp', 600, 600)
+cv.namedWindow("disp", cv.WINDOW_NORMAL)
+cv.resizeWindow("disp", 600, 600)
  
-cv.createTrackbar('numDisparities', 'disp', 1, 17, nothing)
-cv.createTrackbar('blockSize', 'disp', 5, 50, nothing)
-cv.createTrackbar('preFilterSize', 'disp', 2, 25, nothing)
-cv.createTrackbar('preFilterCap', 'disp', 5, 62, nothing)
-cv.createTrackbar('textureThreshold', 'disp', 10, 100, nothing)
-cv.createTrackbar('uniquenessRatio', 'disp', 15, 100, nothing)
-cv.createTrackbar('speckleRange', 'disp', 0, 100, nothing)
-cv.createTrackbar('speckleWindowSize', 'disp', 3, 25, nothing)
-cv.createTrackbar('disp12MaxDiff', 'disp', 5, 25, nothing)
-cv.createTrackbar('minDisparity', 'disp', 5, 25, nothing)
+cv.createTrackbar("numDisparities", "disp", 1, 17, nothing)
+cv.createTrackbar("blockSize", "disp", 5, 50, nothing)
+cv.createTrackbar("preFilterSize", "disp", 2, 25, nothing)
+cv.createTrackbar("preFilterCap", "disp", 5, 62, nothing)
+cv.createTrackbar("textureThreshold", "disp", 10, 100, nothing)
+cv.createTrackbar("uniquenessRatio", "disp", 15, 100, nothing)
+cv.createTrackbar("speckleRange", "disp", 0, 100, nothing)
+cv.createTrackbar("speckleWindowSize", "disp", 3, 25, nothing)
+cv.createTrackbar("disp12MaxDiff", "disp", 5, 25, nothing)
+cv.createTrackbar("minDisparity", "disp", 5, 25, nothing)
  
 # Create an object of StereoBM algorithm
 stereo = cv.StereoBM_create()
@@ -73,16 +73,16 @@ while True:
                               0)
 
         # Update the parameters based on the trackbar positions
-        numDisparities = cv.getTrackbarPos('numDisparities', 'disp') * 16
-        blockSize = cv.getTrackbarPos('blockSize', 'disp') * 2 + 5
-        preFilterSize = cv.getTrackbarPos('preFilterSize', 'disp') * 2 + 5
-        preFilterCap = cv.getTrackbarPos('preFilterCap', 'disp')
-        textureThreshold = cv.getTrackbarPos('textureThreshold', 'disp')
-        uniquenessRatio = cv.getTrackbarPos('uniquenessRatio', 'disp')
-        speckleRange = cv.getTrackbarPos('speckleRange', 'disp')
-        speckleWindowSize = cv.getTrackbarPos('speckleWindowSize', 'disp') * 2
-        disp12MaxDiff = cv.getTrackbarPos('disp12MaxDiff', 'disp')
-        minDisparity = cv.getTrackbarPos('minDisparity', 'disp')
+        numDisparities = cv.getTrackbarPos("numDisparities", "disp") * 16
+        blockSize = cv.getTrackbarPos("blockSize", "disp") * 2 + 5
+        preFilterSize = cv.getTrackbarPos("preFilterSize", "disp") * 2 + 5
+        preFilterCap = cv.getTrackbarPos("preFilterCap", "disp")
+        textureThreshold = cv.getTrackbarPos("textureThreshold", "disp")
+        uniquenessRatio = cv.getTrackbarPos("uniquenessRatio", "disp")
+        speckleRange = cv.getTrackbarPos("speckleRange", "disp")
+        speckleWindowSize = cv.getTrackbarPos("speckleWindowSize", "disp") * 2
+        disp12MaxDiff = cv.getTrackbarPos("disp12MaxDiff", "disp")
+        minDisparity = cv.getTrackbarPos("minDisparity", "disp")
         
         # Set the updated parameters before computing disparity map
         stereo.setNumDisparities(numDisparities)
@@ -109,10 +109,10 @@ while True:
         disparity = (disparity / 16.0 - minDisparity) / numDisparities
     
         # Display the disparity map
-        cv.imshow('disp', disparity)
+        cv.imshow("disp", disparity)
 
         # Press `q` to close the window
-        if cv.waitKey(1) & 0xFF == ord('q'):
+        if cv.waitKey(1) & 0xFF == ord("q"):
             break
 
     else:
@@ -124,3 +124,20 @@ CamL.release()
 CamR.release()
 
 cv.destroyAllWindows()
+
+
+print("Saving disparity parameters...")
+
+cv_file = cv.FileStorage("disparity_params.xml", cv.FILE_STORAGE_WRITE)
+cv_file.write("numDisparities", numDisparities)
+cv_file.write("blockSize", blockSize)
+cv_file.write("preFilterType", 1)
+cv_file.write("preFilterSize", preFilterSize)
+cv_file.write("preFilterCap", preFilterCap)
+cv_file.write("textureThreshold", textureThreshold)
+cv_file.write("uniquenessRatio", uniquenessRatio)
+cv_file.write("speckleRange", speckleRange)
+cv_file.write("speckleWindowSize", speckleWindowSize)
+cv_file.write("disp12MaxDiff", disp12MaxDiff)
+cv_file.write("minDisparity", minDisparity)
+cv_file.release()
