@@ -8,14 +8,13 @@ This script generates a disparity map from a live feed.
 '''
 import cv2 as cv
 import numpy as np
-import os
 
-camIdL = 2  # Camera ID for left camera
-camIdR = 0  # Camera ID for right camera
+CamL_id = 2  # Camera ID for left camera
+CamR_id = 0  # Camera ID for right camera
 
 # Define two VideoCapture objects
-camL = cv.VideoCapture(camIdL)
-camR = cv.VideoCapture(camIdR)
+CamL = cv.VideoCapture(CamL_id)
+CamR = cv.VideoCapture(CamR_id)
 
 
 # Read and map values for stereo image rectification
@@ -49,21 +48,14 @@ stereo = cv.StereoBM_create()
 while True:
 
     # Capture and store left and right camera images
-    retL, imgL = camL.read()
-    retR, imgR = camR.read()
+    retL, imgL = CamL.read()
+    retR, imgR = CamR.read()
 
     # Proceed only if the frames have been captured
     if retL and retR:
         imgR_gray = cv.cvtColor(imgR, cv.COLOR_BGR2GRAY)
         imgL_gray = cv.cvtColor(imgL, cv.COLOR_BGR2GRAY)
 
-
-        print(imgL_gray,
-                             Left_Stereo_Map_x,
-                             Left_Stereo_Map_y,
-                             cv.INTER_LANCZOS4,
-                             cv.BORDER_CONSTANT,
-                             0)
         # Apply stereo image rectification on the left image
         Left_nice = cv.remap(imgL_gray,
                              Left_Stereo_Map_x,
@@ -124,11 +116,11 @@ while True:
             break
 
     else:
-        camL = cv.VideoCapture(camIdL)
-        camR = cv.VideoCapture(camIdR)
+        CamL = cv.VideoCapture(CamL_id)
+        CamR = cv.VideoCapture(CamR_id)
 
 # Release the VideoCapture objects
-camL.release()
-camR.release()
+CamL.release()
+CamR.release()
 
 cv.destroyAllWindows()
