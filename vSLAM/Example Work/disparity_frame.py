@@ -1,13 +1,14 @@
 """
-Title: disparity.py
-Authors: Erik Sanders and Jared Perlic
-Date Start: Mar 13, 2023
+Title: disparity_frame.py
+Authors: Jared Perlic
+Date Start: Mar 15, 2023
 Description:
 
-This script generates a disparity map from a stereo camera.
+This script generates a disparity map for a single image frame.
 """
 import cv2 as cv
 import numpy as np
+from matplotlib import pyplot as plt
 
 CamL_id = 2  # Camera ID for left camera
 CamR_id = 0  # Camera ID for right camera
@@ -47,6 +48,10 @@ while True:
     # Capture and store left and right camera images
     retL, imgL = CamL.read()
     retR, imgR = CamR.read()
+
+    # # Display left and right camera images
+    # cv.imshow("left", imgL)
+    # cv.imshow("right", imgR)
 
     # Proceed only if the frames have been captured
     if retL and retR:
@@ -94,7 +99,8 @@ while True:
         disparity = (disparity / 16.0 - minDisparity) / numDisparities
     
         # Display the disparity map
-        cv.imshow("disp", disparity)
+        plt.imshow(disparity, "gray")
+        plt.show()
 
         # Press `q` to close the window
         if cv.waitKey(1) & 0xFF == ord("q"):
