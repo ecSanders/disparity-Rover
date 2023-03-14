@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <opencv_storage>
-<numDisparities>16</numDisparities>
-<blockSize>15</blockSize>
+<numDisparities>160</numDisparities>
+<blockSize>5</blockSize>
 <preFilterType>1</preFilterType>
 <preFilterSize>9</preFilterSize>
 <preFilterCap>5</preFilterCap>
