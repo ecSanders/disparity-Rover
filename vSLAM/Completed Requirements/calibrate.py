@@ -12,8 +12,8 @@ print("Extracting image coordinates of respective 3D pattern ....\n")
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
 
-objp = np.zeros((9*6,3), np.float32)
-objp[:,:2] = np.mgrid[0:9,0:6].T.reshape(-1,2)
+objp = np.zeros((8*6,3), np.float32)
+objp[:,:2] = np.mgrid[0:8,0:6].T.reshape(-1,2)
 
 img_ptsL = []
 img_ptsR = []
@@ -28,15 +28,15 @@ for i in tqdm(range(1,28)):
 	outputL = imgL.copy()
 	outputR = imgR.copy()
 
-	retR, cornersR =  cv2.findChessboardCorners(outputR,(9,6),None)
-	retL, cornersL = cv2.findChessboardCorners(outputL,(9,6),None)
+	retR, cornersR =  cv2.findChessboardCorners(outputR,(8,6),None)
+	retL, cornersL = cv2.findChessboardCorners(outputL,(8,6),None)
 
 	if retR and retL:
 		obj_pts.append(objp)
 		cv2.cornerSubPix(imgR_gray,cornersR,(11,11),(-1,-1),criteria)
 		cv2.cornerSubPix(imgL_gray,cornersL,(11,11),(-1,-1),criteria)
-		cv2.drawChessboardCorners(outputR,(9,6),cornersR,retR)
-		cv2.drawChessboardCorners(outputL,(9,6),cornersL,retL)
+		cv2.drawChessboardCorners(outputR,(8,6),cornersR,retR)
+		cv2.drawChessboardCorners(outputL,(8,6),cornersL,retL)
 		cv2.imshow('cornersR',outputR)
 		cv2.imshow('cornersL',outputL)
 		cv2.waitKey(0)
@@ -47,9 +47,11 @@ for i in tqdm(range(1,28)):
 
 print("Calculating left camera parameters ... ")
 # Calibrating left camera
+
 retL, mtxL, distL, rvecsL, tvecsL = cv2.calibrateCamera(obj_pts,img_ptsL,imgL_gray.shape[::-1],None,None)
 hL,wL= imgL_gray.shape[:2]
 new_mtxL, roiL= cv2.getOptimalNewCameraMatrix(mtxL,distL,(wL,hL),1,(wL,hL))
+
 
 print("Calculating right camera parameters ... ")
 # Calibrating right camera
@@ -94,11 +96,27 @@ Left_Stereo_Map= cv2.initUndistortRectifyMap(new_mtxL, distL, rect_l, proj_mat_l
 Right_Stereo_Map= cv2.initUndistortRectifyMap(new_mtxR, distR, rect_r, proj_mat_r,
                                               imgR_gray.shape[::-1], cv2.CV_16SC2)
 
+# left_map=cv2.undistort(imgL_gray, new_mtxL, distL, None, proj_mat_l)
 
-print("Saving paraeters ......")
+# cv2.imshow("Distortion", left_map)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()
+
+
+# cv2.initUndistortRectifyMap(mtxL, distL, rect_l, proj_mat_l, (wL, hL), cv2.CV_32FC1)
+
+# cv2.undistort(img, image_undistorted, mtxL, distL, proj_mat_l)
+
+
+
+print("Saving parameters ......")
 cv_file = cv2.FileStorage("data/params_py.xml", cv2.FILE_STORAGE_WRITE)
 cv_file.write("Left_Stereo_Map_x",Left_Stereo_Map[0])
 cv_file.write("Left_Stereo_Map_y",Left_Stereo_Map[1])
 cv_file.write("Right_Stereo_Map_x",Right_Stereo_Map[0])
 cv_file.write("Right_Stereo_Map_y",Right_Stereo_Map[1])
 cv_file.release()
+
+
+
+
