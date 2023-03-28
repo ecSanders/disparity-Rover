@@ -1,6 +1,6 @@
 '''
 Title: capture2.py
-Authors: Jared Perlic
+Authors: Jared Perlic, Erik Sanders
 Date Start: Jan 30, 2023
 Description:
 
@@ -22,9 +22,14 @@ while True:
     cv.imshow('dispL', frameL)
     cv.imshow('dispR', frameR)
     
+    # write images out as a stereo pair
+    cv.imwrite("../../Images/left.png", frameL)
+    cv.imwrite("../../Images/right.png", frameR)
+    
     # Press `q` to close the window
     if cv.waitKey(1) & 0xFF == ord('q'):
         break
+
 
 # Release the VideoCapture objects
 camL.release()

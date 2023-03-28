@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 import time
 
 # Read images
-img1 = cv.imread('../../Images/stitch01_med.jpg', cv.IMREAD_GRAYSCALE)
-img2 = cv.imread('../../Images/stitch02_med.jpg', cv.IMREAD_GRAYSCALE)
+img1 = cv.imread('../../Images/left.png', cv.IMREAD_GRAYSCALE)
+img2 = cv.imread('../../Images/right.png', cv.IMREAD_GRAYSCALE)
 
 # Initiate ORB detector
 orb = cv.ORB_create()

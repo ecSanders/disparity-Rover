@@ -2,11 +2,18 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-FILE01 = 'left.png'
-FILE02 = 'right.png'
 
-imgL = cv2.imread(f'../../Images/{FILE01}', cv2.IMREAD_GRAYSCALE)
-imgR = cv2.imread(f'../../Images/{FILE02}', cv2.IMREAD_GRAYSCALE)
+# Define two VideoCapture objects
+cam = cv2.VideoCapture(1)  # Camera ID for left camera
+
+while True:
+
+    # Capture video frame by frame
+    retL, frame = cam.read()
+
+    
+    left = frame[0:960, 1280:2560]
+    right = frame[0:960, 0:1280]
 
 
 stereo = cv2.StereoSGBM_create(minDisparity=2,numDisparities=96, blockSize=19,\
